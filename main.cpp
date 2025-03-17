@@ -1,6 +1,7 @@
-#include <iostream>
+#include "AppRunner.hpp"
 
-int main(){
-    std::cout << "Hello, world!";
+int main() {
+    AppRunner::RunApp();
+
     return 0;
 }
