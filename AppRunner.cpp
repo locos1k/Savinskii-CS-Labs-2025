@@ -1,157 +1,60 @@
 #include "AppRunner.hpp"
 
 #include <iostream>
+#include <iomanip>
 
-#include "diets/Diets.hpp"
-#include "planets/Planets.hpp"
-
-namespace {}
+#include "fractions/Fraction.hpp"
 
 namespace AppRunner {
-void RunPlanetsApp() {
-    int task = 0;
-
-    int size = 1;
-    Planets::Planet* planets = new Planets::Planet[size]();
-
-    while (true) {
-        std::cout << "Выберите номер задания для работы с БД:\n"
-                  << "1 - Чтение БД из файла\n"
-                  << "2 - Запись БД в файл\n"
-                  << "3 - Сортировка БД\n"
-                  << "4 - Добавление нового объекта в БД\n"
-                  << "5 - Удаление объекта из БД\n"
-                  << "6 - Редактирование БД\n"
-                  << "7 - Вывод БД на экран\n"
-                  << "0 - Выход\n";
-        std::cin >> task;
-        std::cout << std::endl;
-
-        switch (static_cast<Tasks>(task)) {
-            case Tasks::Read: {
-                Planets::Planet::ReadDB(planets, size);
-                break;
-            }
-            case Tasks::Write: {
-                Planets::Planet::WriteDB(planets, size);
-                break;
-            }
-            case Tasks::Sort: {
-                Planets::Planet::SortDB(planets, size);
-                break;
-            }
-            case Tasks::Add: {
-                Planets::Planet::AddElement(planets, size);
-                break;
-            }
-            case Tasks::Delete: {
-                Planets::Planet::DeleteElement(planets, size);
-                break;
-            }
-            case Tasks::Edit: {
-                Planets::Planet::EditDB(planets, size);
-                break;
-            }
-            case Tasks::Print: {
-                Planets::Planet::PrintDB(planets, size);
-                break;
-            }
-            case Tasks::Exit: {
-                Planets::Planet::DeleteDB(planets);
-                return;
-            }
-            default: {
-                std::cout << "Введен несуществующий номер задания." << std::endl;
-                break;
-            }
-        }
-    }
-}
-void RunDietApp() {
-    int task = 0;
-
-    int size = 1;
-    Diet::Diet* diets = new Diet::Diet[size]();
-
-    while (true) {
-        std::cout << "Выберите номер задания для работы с БД:\n"
-                  << "1 - Чтение БД из файла\n"
-                  << "2 - Запись БД в файл\n"
-                  << "3 - Сортировка БД\n"
-                  << "4 - Добавление нового объекта в БД\n"
-                  << "5 - Удаление объекта из БД\n"
-                  << "6 - Редактирование БД\n"
-                  << "7 - Вывод БД на экран\n"
-                  << "0 - Выход \n";
-        std::cin >> task;
-        std::cout << std::endl;
-
-        switch (static_cast<Tasks>(task)) {
-            case Tasks::Read: {
-                Diet::Diet::ReadDB(diets, size);
-                break;
-            }
-            case Tasks::Write: {
-                Diet::Diet::WriteDB(diets, size);
-                break;
-            }
-            case Tasks::Sort: {
-                Diet::Diet::SortDB(diets, 0, size - 1);
-                break;
-            }
-            case Tasks::Add: {
-                Diet::Diet::AddElement(diets, size);
-                break;
-            }
-            case Tasks::Delete: {
-                Diet::Diet::DeleteElement(diets, size);
-                break;
-            }
-            case Tasks::Edit: {
-                Diet::Diet::EditDB(diets, size);
-                break;
-            }
-            case Tasks::Print: {
-                Diet::Diet::PrintDB(diets, size);
-                break;
-            }
-            case Tasks::Exit: {
-                Diet::Diet::DeleteDB(diets);
-                return;
-            }
-            default: {
-                std::cout << "Введен несуществующий номер задания." << std::endl;
-                break;
-            }
-        }
-    }
-}
-
 void RunApp() {
-    int task = 0;
+    std::cout << "Введите дробь:   ";
+    Fractions::Fraction z;
+    std::cin >> z;
+    std::cout << "z = " << z << std::endl;
+    
+    Fractions::Fraction fr1(10, 14), fr2;
+    std::cout << "fr2 = " << fr2 << std::endl;
+    std::cout << "fr1 = " << fr1 << std::endl;
 
-    while (true) {
-        std::cout << "Введите номер режима работы с приложением:\n"
-                  << "1 - Планеты\n"
-                  << "2 - Пищевой набор диеты\n"
-                  << "0 - Выход\n";
-        std::cin >> task;
-        std::cout << std::endl;
+    Fractions::Fraction fr = "-1 4/8";
+    std::cout << "fr = " << fr << std::endl;
 
-        switch (static_cast<AppTasks>(task)) {
-            case AppTasks::Planets:
-                RunPlanetsApp();
-                break;
-            case AppTasks::Diet:
-                RunDietApp();
-                break;
-            case AppTasks::Exit:
-                return;
-                break;
-            default:
-                std::cout << "Введен несуществующий номер режима работы\n";
-                break;
-        }
-    }
+    Fractions::Fraction x(z), y;
+    std::cout << "x = " << x << std::endl;
+
+    double dbl = -1.25;
+    Fractions::Fraction f = dbl;
+    std::cout << "f = " << f << std::endl;
+
+    y = x + z;
+    std::cout << "y = " << y << std::endl;
+
+    y += x;
+    std::cout << "y = " << y << std::endl;
+
+    f += dbl / 2;
+    std::cout << "f = " << f << std::endl;
+
+    y = x + dbl;
+    std::cout << "y = " << y << std::endl;
+
+    y = dbl + y;
+    std::cout << "y = " << y << std::endl;
+
+    y += dbl;
+    std::cout << "y = " << y << std::endl;
+
+    int i = 5;
+    y += i;
+    std::cout << "y = " << y << std::endl;
+
+    y = i + x;
+    std::cout << "y = " << y << std::endl;
+
+    y = x + i;
+    std::cout << "y = " << y << std::endl;
+
+    y += dbl + i + x;
+    std::cout << "y = " << y << std::endl;
 }
 }  // namespace AppRunner
