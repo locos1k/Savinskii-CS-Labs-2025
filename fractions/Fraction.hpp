@@ -8,7 +8,7 @@ class Fraction {
     int denominator;
 
     int CalculateGCD(int a, int b) {
-        while(b) {
+        while (b) {
             a %= b;
             std::swap(a, b);
         }
@@ -21,8 +21,15 @@ class Fraction {
         denominator /= gcd;
     }
 
+    bool isNumber(const char* s) {
+        while (*s) {
+            if (!std::isdigit(*s) && *s != '-') return false;
+            s++;
+        }
+        return true;
+    }
  public:
-    Fraction(): numerator(0), denominator(1) {};
+    Fraction() : numerator(0), denominator(1) {};
     Fraction(const char* str);
     Fraction(double decimal);
     Fraction(int num, int denom);
@@ -33,6 +40,8 @@ class Fraction {
     friend std::istream& operator>>(std::istream& in, Fraction& fraction);
     friend std::ostream& operator<<(std::ostream& out, Fraction& fraction);
 
+    Fraction operator-(Fraction& other);
+
     Fraction operator+(Fraction& other);
     Fraction operator+(int x);
     Fraction operator+(double x);
@@ -42,6 +51,5 @@ class Fraction {
     Fraction& operator+=(Fraction other);
     Fraction& operator+=(int x);
     Fraction& operator+=(double x);
-    
 };
 }  // namespace Fractions

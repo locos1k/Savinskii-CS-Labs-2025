@@ -1,9 +1,7 @@
 #include "AppRunner.hpp"
+#include "fractions/Fraction.hpp"
 
 #include <iostream>
-#include <iomanip>
-
-#include "fractions/Fraction.hpp"
 
 namespace AppRunner {
 void RunApp() {
@@ -11,10 +9,13 @@ void RunApp() {
     Fractions::Fraction z;
     std::cin >> z;
     std::cout << "z = " << z << std::endl;
-    
-    Fractions::Fraction fr1(10, 14), fr2;
+
+    Fractions::Fraction fr1(1, 2), fr2;
     std::cout << "fr2 = " << fr2 << std::endl;
     std::cout << "fr1 = " << fr1 << std::endl;
+
+    fr2 = z - fr1;
+    std::cout << "fr2(проверка перегрузки минуса) = " << fr2 << std::endl;
 
     Fractions::Fraction fr = "-1 4/8";
     std::cout << "fr = " << fr << std::endl;

@@ -1,9 +1,11 @@
 #include "Fraction.hpp"
 
+#include <exception>
 #include <iostream>
+#include <algorithm>
 
 namespace {
-const int kAccuracy = 1000;
+const int kAccuracy = 10000;
 }  // namespace
 
 namespace Fractions {
@@ -11,63 +13,51 @@ void Fraction::GetStr(const char* str) {
     char buffer[50];
     std::strcpy(buffer, str);
 
-    char* wholePart = std::strtok(buffer, " ");
-    char* fractionPart = std::strtok(nullptr, " ");
+    char* firstPart = std::strtok(buffer, " ");
+    char* secondPart = std::strtok(nullptr, " ");
 
     int whole = 0;
     int num = 0;
     int denom = 1;
 
-    if (fractionPart != nullptr) {
-        whole = std::atoi(wholePart);
-        char* numPart = std::strtok(fractionPart, "/");
+    if (firstPart == nullptr) {
+        throw std::invalid_argument("Ошибка: пустой ввод");
+    }
+
+    if (secondPart != nullptr) {
+        if (!isNumber(firstPart)) throw std::invalid_argument("Ошибка: целая часть не является числом");
+
+        whole = std::atoi(firstPart);
+        char* numPart = std::strtok(secondPart, "/");
         char* denomPart = std::strtok(nullptr, "/");
 
-        if (numPart == nullptr || denomPart == nullptr) {
-            std::cout << "Ошибка: неверный формат дроби" << std::endl;
-            numerator = 0;
-            denominator = 1;
-            return;
+        if (numPart == nullptr || denomPart == nullptr || !isNumber(numPart) || !isNumber(denomPart)) {
+            throw std::invalid_argument("Ошибка: неверный формат дроби");
         }
 
         num = std::atoi(numPart);
         denom = std::atoi(denomPart);
-    } else if (std::strchr(wholePart, '/')) {
-        char* numPart = std::strtok(wholePart, "/");
+    } else if (std::strchr(firstPart, '/')) {
+        char* numPart = std::strtok(firstPart, "/");
         char* denomPart = std::strtok(nullptr, "/");
 
-        if (numPart == nullptr || denomPart == nullptr) {
-            std::cout << "Ошибка: неверный формат дроби" << std::endl;
-            numerator = 0;
-            denominator = 1;
-            return;
+        if (numPart == nullptr || denomPart == nullptr || !isNumber(numPart) || !isNumber(denomPart)) {
+            throw std::invalid_argument("Ошибка: неверный формат дроби");
         }
 
         num = std::atoi(numPart);
         denom = std::atoi(denomPart);
     } else {
-        whole = std::atoi(wholePart);
+        if (!isNumber(firstPart)) throw std::invalid_argument("Ошибка: введено не число");
+        whole = std::atoi(firstPart);
     }
 
     if (denom == 0) {
-        std::cout << "Ошибка: знаменатель не может быть равен 0" << std::endl;
-        numerator = 0;
-        denominator = 1;
-        return;
-    }
-    if (denom < 0) {
-        std::cout << "Ошибка: знаменатель должен быть положительным" << std::endl;
-        numerator = 0;
-        denominator = 1;
-        return;
+        throw std::invalid_argument("Ошибка: знаменатель не может быть равен 0");
     }
 
-    //std::cout << "whole = " << whole << ", num = " << num << ", denom = " << denom << std::endl;
-    
-    numerator = whole * denom + (whole >= 0? num : -num);
+    numerator = whole * denom + (whole >= 0 ? num : -num);
     denominator = denom;
-
-    //std::cout << ", num = " << numerator << ", denom = " << denominator << std::endl;
 
     ReduceFraction();
 }
@@ -85,10 +75,7 @@ Fraction::Fraction(double decimal) {
 
 Fraction::Fraction(int num, int denom) {
     if (denom <= 0) {
-        std::cout << "Ошибка: знаменатель должен быть положительным" << std::endl;
-        numerator = 0;
-        denominator = 1;
-        return;
+        throw std::invalid_argument("Ошибка: знаменатель должен быть положительным");
     }
 
     numerator = num;
@@ -123,6 +110,10 @@ std::ostream& operator<<(std::ostream& out, Fraction& fraction) {
     }
 
     return out;
+}
+
+Fraction Fraction::operator-(Fraction& other) {
+    return Fraction(numerator * other.denominator - other.numerator * denominator, denominator * other.denominator);
 }
 
 Fraction Fraction::operator+(Fraction& other) {
