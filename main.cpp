@@ -2,11 +2,7 @@
 #include <iostream>
 
 int main() {
-    try {
-        AppRunner::RunApp();
-    } catch(const std::exception& e) {
-        std::cout << e.what() << std::endl;
-    }
+    AppRunner::RunApp();
     
     return 0;
 }
