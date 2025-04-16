@@ -15,7 +15,7 @@ void RunApp() {
     std::cout << "fr1 = " << fr1 << std::endl;
 
     fr2 = z - fr1;
-    std::cout << "fr2(проверка перегрузки минуса) = " << fr2 << std::endl;
+    std::cout << "fr2 = z - fr1 = " << fr2 << std::endl;
 
     Fractions::Fraction fr = "-1 4/8";
     std::cout << "fr = " << fr << std::endl;
