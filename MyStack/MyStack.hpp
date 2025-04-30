@@ -1,36 +1,18 @@
 #include <iostream>
-// Файл MyStack.h
-// Шаблонный класс MyStack на основе односвязного списка.
-#ifndef MyStack_hpp  // защита от повторной компиляции
-#define MyStack_hpp  // модуль подключен
 
-// Шаблонный класс ListNode (узел односвязного списка)
+#ifndef MyStack_hpp
+#define MyStack_hpp
+
 template<class INF>
 class MyStack;
 template<class INF, class FRIEND>
-class ListNode  // узел списка
-{
+class ListNode {
  private:
-    INF d;                              // информационная часть узла
-    ListNode* next;                     // указатель на следующий узел списка
-    ListNode(void) { next = nullptr; }  // конструктор
-    ListNode(const ListNode& other) {
-        this->d = other.d;
-        this->next = nullptr;
-    }
-    ListNode& operator=(const ListNode& other) {
-        if (this != &other) {
-            this->d = other.d;
-            this->next = other.next;
-        }
-        return *this;
-    }
+    INF d;
+    ListNode* next;
+    ListNode(void) { next = nullptr; }
     friend FRIEND;
-    template<class T>
-    friend std::ostream& operator<<(std::ostream& out, const MyStack<T>& el);
 };
-
-// Шаблонный класс MyStack на основе односвязного списка.
 
 template<class INF>
 std::ostream& operator<<(std::ostream& out, const MyStack<INF>& el);
@@ -41,17 +23,19 @@ class MyStack {
     Node* top;
 
  public:
-    MyStack(void);      // конструктор
-    ~MyStack(void);     // освободить динамическую память
-    bool empty(void);   // стек пустой?
-    bool push(INF n);   // добавить узел в вершину стека
-    bool pop(void);     // удалить узел из вершины стека
-    INF top_inf(void);  // считать информацию из вершины стека
+    MyStack(void);
+    ~MyStack(void);
+    bool empty(void);
+    bool push(INF n);
+    bool pop(void);
+    INF top_inf(void);
     MyStack(const MyStack& other);
     MyStack<INF>& operator=(const MyStack<INF>& other);
+    MyStack<INF> operator+(const MyStack<INF>& other) const;
 
     friend std::ostream& operator<< <>(std::ostream& out, const MyStack& el);
 };
+
 template<class INF>
 std::ostream& operator<<(std::ostream& out, const MyStack<INF>& el) {
     typename MyStack<INF>::Node* p = el.top;
@@ -178,6 +162,39 @@ INF MyStack<INF>::top_inf(void) {
         throw std::runtime_error("Стек пуст");
     }
     return top->d;
+}
+
+template<class INF>
+MyStack<INF> MyStack<INF>::operator+(const MyStack<INF>& other) const {
+    MyStack<INF> result;
+    MyStack<INF> temp;
+    Node* current = other.top;
+    while (current) {
+        temp.push(current->d);
+        current = current->next;
+    }
+
+    while (!temp.empty()) {
+        result.push(temp.top_inf());
+        temp.pop();
+    }
+    temp = *this;
+    MyStack<INF> temp2;
+    while (!temp.empty()) {
+        temp2.push(temp.top_inf());
+        temp.pop();
+    }
+    while (!temp2.empty()) {
+        result.push(temp2.top_inf());
+        temp2.pop();
+    }
+    MyStack<INF> finalResult;
+    while (!result.empty()) {
+        finalResult.push(result.top_inf());
+        result.pop();
+    }
+
+    return finalResult;
 }
 
 #endif
