@@ -1,2 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/ar qc libcontainers.a CMakeFiles/containers.dir/MySet.cpp.o CMakeFiles/containers.dir/MyVector.cpp.o
-/Library/Developer/CommandLineTools/usr/bin/ranlib libcontainers.a
