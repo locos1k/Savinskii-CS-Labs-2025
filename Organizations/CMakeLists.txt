@@ -1,15 +1,15 @@
 cmake_minimum_required(VERSION 3.23)
 
-set(project "Polynomial")
+set(project "Organizations")
 project(${project})
 
 set(CMAKE_CXX_STANDARD 17)
 
 set(${project}_SOURCES
-        Polynomial.cpp)
+        Factory.cpp InsuranceCompany.cpp Organization.cpp ShipbuildingCompany.cpp)
 
 set(${project}_HEADERS
-        Polynomial.hpp)
+        Factory.hpp InsuranceCompany.hpp Organization.hpp ShipbuildingCompany.hpp)
 
 set(${project}_SOURCE_LIST
         ${${project}_SOURCES}
