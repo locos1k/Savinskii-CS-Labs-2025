@@ -1,14 +1,16 @@
 cmake_minimum_required(VERSION 3.23)
 
-set(project "lab5")
+set(project "lab6")
 project(${project})
 
 set(CMAKE_CXX_STANDARD 17)
 
 set(${project}_SOURCES
+        AppRunner.cpp
         main.cpp)
 
-add_subdirectory(containers)
+add_subdirectory(Polynomial)
+add_subdirectory(Term)
 
 set(${project}_SOURCE_LIST
         ${${project}_SOURCES})
@@ -16,4 +18,5 @@ set(${project}_SOURCE_LIST
 add_executable(${project}
         ${${project}_SOURCE_LIST})
 
-target_link_libraries(${project} containers)
+target_link_libraries(${project} Polynomial)
+target_link_libraries(${project} Term)
