@@ -16,6 +16,6 @@ class InsuranceCompany : public Organization {
 
    void show() const override {
       std::cout << "Страховая компания: " << name << ", основана в " << year
-                << " году, общий капитал: $" << capital << "млрд"<< std::endl;
+                << " году, общий капитал: " << capital << " млрд долларов"<< std::endl;
    }
 };

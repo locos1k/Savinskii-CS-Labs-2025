@@ -163,6 +163,7 @@ void menu() {
                 demo(organizations);
                 return;
             case Task::Exit:
+                clear(organizations);
                 return;
             default:
                 std::cout << "Неверный номер задания" << std::endl;
